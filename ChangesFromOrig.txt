@@ -1,0 +1,1 @@
+1. In RegTB function, csvwrite function has been taken from individual cases to the end
