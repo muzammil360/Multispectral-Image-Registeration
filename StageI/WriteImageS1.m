@@ -13,4 +13,11 @@ function WriteImageS1(Image,Directory,Filename,Suffix)
 Filepath = [Directory '\' Filename(1:end-4) Suffix '.TIF'];
 imwrite(Image,Filepath);
 
+% TiffObj = Tiff(Filepath,'w');
+
+% tagstruct.ImageLength = size(Image,1);
+
+% TiffObj.setTag(tagstruct)
+% TiffObj.write(Image);
+% TiffObj.close();
 end

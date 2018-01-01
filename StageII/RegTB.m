@@ -58,8 +58,11 @@ function H=homography(pts_master,pts_aligned)
 count =0;
 % w and h is principal point of camera
 % Transformed pt from red to master of our sequoia
-w=664.587013699377;
-h=485.807105336483;
+% w=664.587013699377;
+% h=485.807105336483;
+
+w = 653.3341;
+h = 454.7299;
 
 if(size(pts_master,1)>=4)
     for i=1:size(pts_master,1)

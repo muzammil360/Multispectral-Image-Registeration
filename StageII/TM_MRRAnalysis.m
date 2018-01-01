@@ -1,4 +1,4 @@
-% This script serves as the top module for stage I registeration
+% This script serves as the top module for MRR Analysis
 clear;clc;
 
 %% USER PARAMETERS
@@ -33,7 +33,7 @@ ElaspedTime = zeros(N,1);
 MeanMRR = zeros(N,1);
 
 %% ALGORITHM
-for k = 1:N - N + 1
+for k = 1:N
     
     % READ THE IMAGE
     MasterImg = ReadImageS1([DatasetDirMaster '\' FilelistMaster(k).name]);
