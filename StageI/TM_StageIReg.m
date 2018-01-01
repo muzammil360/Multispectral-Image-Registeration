@@ -49,8 +49,7 @@ end
 
 %% ALGORITHM
 
-% for k=1:length(FilelistMaster)
-for k = 1:1
+for k=1:length(FilelistMaster)
     
     % READ THE IMAGE
     MasterImg = ReadImageS1([DatasetDirMaster '\' FilelistMaster(k).name]);

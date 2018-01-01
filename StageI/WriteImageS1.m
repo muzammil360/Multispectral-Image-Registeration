@@ -1,5 +1,5 @@
 function WriteImageS1(Image,Directory,Filename,Suffix)
-% This function write the output image to disk
+% This function write the output image and image data to disk
 %
 % INPUT
 % Image:            input image to be written 
@@ -10,14 +10,11 @@ function WriteImageS1(Image,Directory,Filename,Suffix)
 % OUTPUT
 % <none> 
 
-Filepath = [Directory '\' Filename(1:end-4) Suffix '.TIF'];
-imwrite(Image,Filepath);
+Filepath1 = [Directory '\' Filename(1:end-4) Suffix '.TIF'];
+imwrite(Image,Filepath1);
 
-% TiffObj = Tiff(Filepath,'w');
+Filepath2 = [Directory '\' Filename(1:end-4) Suffix '.mat'];
+save(Filepath2,'Image');
 
-% tagstruct.ImageLength = size(Image,1);
 
-% TiffObj.setTag(tagstruct)
-% TiffObj.write(Image);
-% TiffObj.close();
 end

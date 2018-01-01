@@ -21,8 +21,8 @@ options.corrThreshold=0.8;
 
 
 %% INITIALIZATION
-FilelistMaster = dir([DatasetDirMaster '\*NIR*.TIF']);
-FilelistSlave = dir([DatasetDirSlave '\*RED*.TIF']);
+FilelistMaster = dir([DatasetDirMaster '\*NIR*.mat']);
+FilelistSlave = dir([DatasetDirSlave '\*RED*.mat']);
 
 if length(FilelistMaster)~=length(FilelistSlave)
     error('unequal no. of master and slave images');
@@ -36,8 +36,8 @@ MeanMRR = zeros(N,1);
 for k = 1:N
     
     % READ THE IMAGE
-    MasterImg = ReadImageS1([DatasetDirMaster '\' FilelistMaster(k).name]);
-    SlaveImg = ReadImageS1([DatasetDirSlave '\' FilelistSlave(k).name]);
+    MasterImg = ReadImageS2([DatasetDirMaster '\' FilelistMaster(k).name]);
+    SlaveImg = ReadImageS2([DatasetDirSlave '\' FilelistSlave(k).name]);
 
     % PROCESS IMAGES
     OutFileName = GetMRRAnalysisOutputFileNames(DatasetDirSlave,FilelistSlave(k).name,MetricID);

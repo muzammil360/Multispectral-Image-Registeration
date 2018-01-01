@@ -11,7 +11,7 @@ OutputFileNameSuffix = '_S21';
 
 
 %% INITIALIZATION
-InputFilelist = dir([InputDir '\*RED*.TIF']);
+InputFilelist = dir([InputDir '\*RED*.mat']);
 N = length(InputFilelist);
 
 
@@ -20,7 +20,7 @@ N = length(InputFilelist);
 for k = 1:1
     
     % READ THE IMAGE
-    Img = ReadImageS1([InputDir '\' InputFilelist(k).name]);
+    Img = ReadImageS2([InputDir '\' InputFilelist(k).name]);
     
     % GET APPROPRIATE TRANSFORM
     H = GetTransform(InputDir,InputFilelist(k).name,MetricID,UseIndividualTransform);
