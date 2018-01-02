@@ -16,8 +16,7 @@ N = length(InputFilelist);
 
 
 %% ALGORITHM
-% for k = 1:N
-for k = 1:1
+for k = 1:N
     
     % READ THE IMAGE
     Img = ReadImageS2([InputDir '\' InputFilelist(k).name]);
