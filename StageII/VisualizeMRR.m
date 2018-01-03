@@ -12,6 +12,12 @@ function MeanMRR = VisualizeMRR(PtsMaster,PtsSlave,Scale,OutFileName)
 % MeanMRR:              mean distance between matched pixel locations 
 %
 
+% If MMI fails to find any matching point at all, then force the values for
+% the sake of program continuity
+if (length(PtsMaster)==1 && length(PtsSlave)==1)
+    PtsMaster = [0 0];
+    PtsSlave = [960 1280];
+end
 
 x1 = PtsSlave(:,1);
 y1 = PtsSlave(:,2);
