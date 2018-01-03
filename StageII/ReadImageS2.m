@@ -11,6 +11,6 @@ function OutImage = ReadImageS2(MatFilename)
 
 load(MatFilename);
 OutImage = Image;
-
+OutImage(isnan(OutImage)) = 0;
 
 end
