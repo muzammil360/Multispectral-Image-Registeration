@@ -5,9 +5,9 @@ clear;clc;
 MetricID = 1;               % MMI (1), NCCR (2), Corr(3)
 Scale = 25;             % max MRR vector length is 50 pixels
 
-DatasetDirMaster = 'D:\BurqData\IntelliGolf\Datasets\RedStickGolfCourse_15122016\OutputS1';
-DatasetDirSlave = DatasetDirMaster;
-MRROutputDir = DatasetDirMaster;
+DatasetDirMaster = 'R:\ImageRegisterationPaper\Datasets\RedStickGolfCourse_15122016\OutputS1';
+DatasetDirSlave = 'R:\ImageRegisterationPaper\Datasets\RedStickGolfCourse_15122016\OutputS22';
+MRROutputDir = DatasetDirSlave;
 
 
 options.distance=13;
@@ -17,6 +17,7 @@ options.fieldSze=((options.templateSze-1)/2*3-1);
 options.medFilt=1;
 options.maxPt=1500;
 options.corrThreshold=0.8;
+options.principalPoint = [2.4905 1.8268]*1280/4.8;
 
 
 
@@ -40,7 +41,7 @@ for k = 1:N
     SlaveImg = ReadImageS2([DatasetDirSlave '\' FilelistSlave(k).name]);
 
     % PROCESS IMAGES
-    OutFileName = GetMRRAnalysisOutputFileNames(DatasetDirSlave,FilelistSlave(k).name,MetricID);
+    OutFileName = GetMRRAnalysisOutputFileNames(MRROutputDir,FilelistSlave(k).name,MetricID);
     tic
     [PtsMaster,PtsSlave,H,dist]=RegTB(MasterImg,SlaveImg,MetricID,options,OutFileName.ET);
     ElaspedTime(k) = toc;
