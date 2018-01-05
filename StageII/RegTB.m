@@ -1,11 +1,13 @@
 function[pts_master,pts_aligned,H,dist]=RegTB(master,aligned,i,options,out_name)
+principal_point = options.principalPoint;
+
 if(i==1)
     tic
     fprintf('Function=MMI_MMR\n');
     pause(1);
     [pts_master,pts_aligned,dist] = RegMMI(master,aligned,options);
     dist=sqrt(dist);
-    H=homography(pts_master,pts_aligned);
+    H=homography(pts_master,pts_aligned,principal_point);
 %     csvwrite('csvlist1.txt',H);
 %     csvwrite('F:\UzairAzhar\IntelliGolf\geometric_alignment_images\new_test\csvlist_MMI.txt',H);
     
@@ -21,7 +23,7 @@ elseif(i==2)
     fprintf('Ftn=NormCorr_MMR\n');
     pause(1);
     [pts_master,pts_aligned,dist] = RegNormcorr(master,aligned,options);
-    H=homography(pts_master,pts_aligned);
+    H=homography(pts_master,pts_aligned,principal_point);
 %     csvwrite('csvlist2.txt',H);
 %     csvwrite(out_name,H);
     
@@ -37,7 +39,7 @@ elseif(i==3)
     fprintf('Ftn=Corr_MMR\n');
     pause(1);
     [pts_master,pts_aligned,dist] = RegCorr(master,aligned,options);
-    H=homography(pts_master,pts_aligned);
+    H=homography(pts_master,pts_aligned,principal_point);
 %     csvwrite('csvlist3.txt',H);
     %Calculating Ransac Points
     %     points_m = cornerPoints(pts_master);
@@ -53,7 +55,7 @@ end
 csvwrite(out_name,H);
 end
 
-function H=homography(pts_master,pts_aligned)
+function H=homography(pts_master,pts_aligned,principal_point)
 %Calculating Homogeneous Matrix
 count =0;
 % w and h is principal point of camera
@@ -61,8 +63,8 @@ count =0;
 % w=664.587013699377;
 % h=485.807105336483;
 
-w = 653.3341;
-h = 454.7299;
+w = principal_point(1);
+h = principal_point(2);
 
 if(size(pts_master,1)>=4)
     for i=1:size(pts_master,1)
