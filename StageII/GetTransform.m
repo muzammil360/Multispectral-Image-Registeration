@@ -16,9 +16,11 @@ function H = GetTransform(Dir,FileName,MetricID,UseIndividualTransform)
 if (UseIndividualTransform == true)        
     FileAddr = [Dir '\' FileName(1:end-4) '_ET' num2str(MetricID) '.csv'];
     H = csvread(FileAddr);
-else   
-    
-    
+elseif (UseIndividualTransform == false)
+    FileAddr = [Dir '\' 'MeanET' num2str(MetricID) '.csv'];
+    H = csvread(FileAddr);
+else
+    errordlg('Error: Invalid UseIndividualTransform param ')
 end
 
 end
