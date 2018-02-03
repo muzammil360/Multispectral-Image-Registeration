@@ -31,25 +31,73 @@ if (sum(diff(FilelistLenVec))~=0)
     errordlg('Some H in atleast 1 input folder is missing');
 end
 
+
+
 N = FilelistLenVec(1);
 
-T = zeros(3,3,N);
+T = zeros(3,3,N,m);
+ImgNo = zeros(N,m);
 
-ImgNo = zeros(N,1);
-for r = 1:N
-    FileAddr = [InputDir '\' Filelist(r).name];
-    T(:,:,r) = csvread(FileAddr);
-    ImgNo(r) = str2double(Filelist(r).name(19:22));
+for i = 1:m
+    Filelist = FilelistBag{i};
+    for r = 1:N
+        FileAddr = [InputDir{i} '\' Filelist(r).name];
+        T(:,:,r,i) = csvread(FileAddr);
+        ImgNo(r,i) = str2double(Filelist(r).name(19:22));
+    end
+end
+
+if (sum(sum(ImgNo - repmat(ImgNo(:,1),1,3)))~=0)
+    errordlg('Image numbers do not match up properly');
 end
 
 %% ALGORITHM
+FlagAll = false(1,m);
+InlierFracAll = zeros(1,m);
+GoodIdxAll = false(N,m);
+
+for i = 1:m
+    [OutT,Flag,InlierFrac,GoodIdx] = ComputeMeanTransform(T(:,:,:,i),MinInThres);
+    FlagAll(i) = Flag;
+    InlierFracAll(i) = InlierFrac;
+    GoodIdxAll(:,i) = GoodIdx';
+end
+
+GoodIdx = all(GoodIdxAll,2);
+InlierFrac = sum(GoodIdx)/length(GoodIdx);
+
+
+H = zeros(3,3,sum(GoodIdx));
+idx = 1:N;
+idx = idx(GoodIdx);
+iter = 1;
+
+for r = idx
+   H_temp = eye(3);
+   
+   for i = 1:m
+       H_temp = T(:,:,r,i)*H_temp;
+   end
+    H(:,:,iter) = H_temp;
+    iter = iter+1;
+end
+
+
+if InlierFrac >= MinInThres
+    OutputT = mean(H,3);
+    Flag = true;
+else
+    OutputT = zeros(3);
+    Flag = false;
+end
+
 
 %% VISUALIZATION
+% write to disk
+if (Flag == true)
+    OutputFileAddr = [OutputFileAddr '\' OutputFileName];
+    csvwrite(OutputFileAddr,OutT);
+end
 
 
 
-
-%% Words
-- get H file list for each of the stage
-- make sure each stage has equal number of files.
-- for each image, read H from all stages and get them multiplied
