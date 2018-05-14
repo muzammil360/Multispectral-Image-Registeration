@@ -2,7 +2,7 @@
 clear;clc
 
 %% USER CONTROL
-InputFileAddr = 'D:\ImageRegisterationPaper\Datasets\RedStickGolfCourse_15122016\OutputS22\MeanMRR_ElaspedTime_1.csv';
+InputFileAddr = 'D:\ImageRegisterationPaper\Datasets\RedStickGolfCourse_15122016\OutputS23_NCC-Com\MeanMRR_ElaspedTime_2.csv';
 
 
 %% INITIALIZATION
@@ -25,3 +25,8 @@ Mode = mode(MMRR)
 Std = std(MMRR)
 Min = min(MMRR)
 Max = max(MMRR)
+MeanTime = mean(Time)
+
+stem(MMRR); title('MMRR plot');
+figure(2);
+stem(Time); title('Time Plot');
